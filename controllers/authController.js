@@ -12,7 +12,7 @@ exports.register=async(req,res)=>{
       name,email,password:pass,
       otp:otp
     }
-    const token=await jwt.sign(payload,'suryansh0987654321',{algorithm:'ES384'});
+    const token=await jwt.sign(payload,'suryansh0987654321');
     res.json({token})
     } catch (error) {
       res.status(404).json('failed');
@@ -35,7 +35,7 @@ exports.otpVerificationController=async (req, res) => {
           coins:0
         })
         await user.save();
-        const token=await jwt.sign({userId:user._id,name:user.name},'suryansh0987654321',{algorithm:'ES384'})
+        const token=await jwt.sign({userId:user._id,name:user.name},'suryansh0987654321')
         if(token){
           return res.json({token});
         }
@@ -53,7 +53,7 @@ exports.otpVerificationController=async (req, res) => {
       const user=await User.findOne({email});
       const verified=await bcrypt.compare(password,user.password);
       if(verified){
-        const token=await jwt.sign({userId:user._id,name:user.name},'suryansh0987654321',{algorithm:'ES384'})
+        const token=await jwt.sign({userId:user._id,name:user.name},'suryansh0987654321')
         if(token){
           return res.json({token});
         }
