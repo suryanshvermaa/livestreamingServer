@@ -53,17 +53,13 @@ exports.verifyStreamKey=async(req,res)=>{
     const {key}=req.query;
     console.log(key);
    try {
-    const verified=await jwt.verify(key,"suryansh0987654321")
-    if(verified){
-        const {channelName,streamKey}=await jwt.decode(key);
-        const channel=await Channel.findOne({channelName});
-        if(channel.streamKey==streamKey){
+        const channel=await Channel.findOne({streamKey:key});
+        if(channel){
             return res.status(200).json('verified')
-        }
-        return res.status(404).json('unauthorised');
-    }else{
-        return res.status(404).json('unauthorised');
-    }
+        }else{
+return res.status(404).json('unotherised')
+}
+     
    } catch (error) {
     return res.status(404).json('unauthorised');
    }
