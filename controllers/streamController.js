@@ -53,12 +53,7 @@ exports.verifyStreamKey=async(req,res)=>{
     const {key}=req.query;
     console.log(key);
    try {
-        const channel=await Channel.findOne({streamKey:key});
-        if(channel){
-            return res.status(200).json('verified')
-        }else{
-return res.status(404).json('unotherised')
-}
+        if(key=='55') return res.json("dhksdh");
      
    } catch (error) {
     return res.status(404).json('unauthorised');
