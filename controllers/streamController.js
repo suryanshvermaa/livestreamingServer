@@ -18,7 +18,7 @@ exports.createChannel=async(req,res)=>{
             channelName,
             streamKey
         }
-        const token=await jwt.sign(streamKeyPayload,"suryansh0987654321",{algorithm:"ES384"});
+        const token=await jwt.sign(streamKeyPayload,"suryansh0987654321");
         const playbackUrl=`http://localhost:1935/live/${channelName}`
         const channel=new Channel({
             channelName,authorised,userId,streamKey,playbackUrl
@@ -40,7 +40,7 @@ exports.signPlaybackUrl=async(req,res)=>{
         const payload={
             playbackUrl,userId
         }
-        const token=await jwt.sign(payload,'hufsssssssssssssssssssssssssssssssssssssssssshfhjsghshghlgsljdjzhmzndz',{algorithm:'ES384'});
+        const token=await jwt.sign(payload,'hufsssssssssssssssssssssssssssssssssssssssssshfhjsghshghlgsljdjzhmzndz');
         const url=`${playbackUrl}?token=${token}`
         res.json({signedUrl:url});
     }
@@ -53,7 +53,7 @@ exports.verifyStreamKey=async(req,res)=>{
     const {key}=req.query;
     console.log(key);
    try {
-    const verified=await jwt.verify(key,"suryansh0987654321",{algorithms:"ES384"})
+    const verified=await jwt.verify(key,"suryansh0987654321")
     if(verified){
         const {channelName,streamKey}=await jwt.decode(key);
         const channel=await Channel.findOne({channelName});
@@ -73,7 +73,7 @@ exports.verifyPlaybackUrl=async(req,res)=>{
   const {token}=req.query;
   console.log(token);
   try {
-    const verified=await jwt.verify(token,"hufsssssssssssssssssssssssssssssssssssssssssshfhjsghshghlgsljdjzhmzndz",{algorithms:"ES384"})
+    const verified=await jwt.verify(token,"hufsssssssssssssssssssssssssssssssssssssssssshfhjsghshghlgsljdjzhmzndz")
   if(verified){
     return res.json("verified");
   }
